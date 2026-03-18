@@ -1,0 +1,12 @@
+# OpenFOAM
+[1-9]*
+processor*
+postProcessing
+*.foam
+*.OpenFOAM
+log.*
+*.log
+/constant/polyMesh/*
+
+# OS
+.DS_Store
