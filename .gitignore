@@ -1,6 +1,7 @@
 # OpenFOAM
 [1-9]*
 0.*
+!0.orig
 processor*
 postProcessing
 *.foam
