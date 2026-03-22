@@ -22,7 +22,7 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         0.65;
+endTime         1;
 
 deltaT          0.00001;
 
@@ -44,7 +44,7 @@ runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.3;
+maxCo           0.5;
 
 maxDeltaT       1;
 
@@ -56,8 +56,7 @@ functions
         type            fieldMinMax;
         libs            ("libfieldFunctionObjects.so");
         enabled         true;
-        writeControl    adjustable;
-        writeInterval   0.01;
+        writeControl    writeTime;
         mode            magnitude;
         fields          ( p );
     }
@@ -66,10 +65,16 @@ functions
         type            fieldMinMax;
         libs            ("libfieldFunctionObjects.so");
         enabled         true;
-        writeControl    adjustable;
-        writeInterval   0.01;
+        writeControl    writeTime;
         mode            component;
         fields          ( U );
+    }
+    MachNo1
+    {
+        type            MachNo;
+        libs            (fieldFunctionObjects);
+
+        writeControl    writeTime;
     }
 
 }
