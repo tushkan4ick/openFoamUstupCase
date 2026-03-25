@@ -12,6 +12,6 @@ export FOAM_MPIRUN_FLAGS="--use-hwthread-cpus"
 runParallel $(getApplication)
 
 runApplication reconstructPar
-runApplication postPostprocess -func minPressure
+runApplication postPostprocess -func minPressure ReynoldsNumber
 
 #------------------------------------------------------------------------------

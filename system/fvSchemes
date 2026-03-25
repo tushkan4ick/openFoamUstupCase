@@ -30,7 +30,7 @@ divSchemes
 {
     default         Gauss linear;
 
-    div(tauMC)      Gauss linear;
+    div(tauMC)      Gauss linear corrected;
 }
 
 laplacianSchemes

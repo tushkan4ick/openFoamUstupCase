@@ -22,9 +22,9 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1;
+endTime         0.5;
 
-deltaT          0.00001;
+deltaT          0.0001;
 
 writeControl    adjustable;
 
@@ -44,7 +44,7 @@ runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.5;
+maxCo           0.45;
 
 maxDeltaT       1;
 
@@ -75,6 +75,25 @@ functions
         libs            (fieldFunctionObjects);
 
         writeControl    writeTime;
+    }
+    
+    ReynoldsNumber
+    {
+    	type            exprField;
+    	libs            ("libfieldFunctionObjects.so");
+
+   	enabled         true;
+    	field           Re;
+    	dimensions      [0 0 0 0 0 0 0];
+
+    	expression      "rho*mag(U)*(T + 110)/(1.458e-06*pow(T,1.5))";
+
+    	autowrite       true;
+    	store           true;
+
+    	executeControl  timeStep;
+    	executeInterval 1;
+    	writeControl    writeTime;
     }
 
 }

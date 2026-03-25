@@ -34,10 +34,10 @@ solvers
     {
         $U;
         tolerance       1e-10;
-        relTol          0;
+        relTol          0.01;
     }
 
-    omega
+/*    omega
 	{
 		solver          smoothSolver;
 		smoother        GaussSeidel;
@@ -51,7 +51,7 @@ solvers
 		smoother        GaussSeidel;
 		tolerance       1e-6;
 		relTol          0.1;
-	}
+	}*/
 }
 
 

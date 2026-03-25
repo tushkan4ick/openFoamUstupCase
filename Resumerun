@@ -7,7 +7,7 @@ cd "${0%/*}" || exit                                # Run from this directory
 export FOAM_MPIRUN_FLAGS="--use-hwthread-cpus"
 
 
-runParallel $(getApplication) -latestTime
+runParallel $(getApplication)
 
 runApplication reconstructPar
 runApplication postPostprocess -func minPressure
