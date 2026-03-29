@@ -24,7 +24,7 @@ boundaryField
 {
     inlet
     {
-        type            fixedValue;
+        type            fixedProfile;
         value           uniform $Uinlet;
         
         direction	(0 1 0);
@@ -38,7 +38,7 @@ boundaryField
             componentColumns    (0 1 2);			//Допускаются любые целые числа, дающие номера столбцов (Ux Uy Uz)
             separator		",";				//допускается любой, в тч несколько, по умолчанию: ","
             mergeSeparators     no;        			//для одного разделителя, если несколько, то: yes
-            fileName		"constant/uProfile.csv";
+            file        		"constant/uProfile.csv";
             outOfBounds         clamp;				//clamp - при выходе за пределы значение становится постоянным и равным значению на границе
             interpolationScheme linear;
         }
