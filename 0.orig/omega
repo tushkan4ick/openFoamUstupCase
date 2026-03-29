@@ -10,41 +10,42 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      p;
+    object      omega;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [1 -1 -2 0 0 0 0];
+omegaInlet      10;
 
-internalField   uniform 100;
+dimensions      [0 0 -1 0 0 0 0];
+
+internalField   uniform $omegaInlet;
 
 boundaryField
 {
-    inlet
-    {
-        type            fixedValue;
-        value           uniform 100;
+	inlet
+	{
+		type            fixedValue;
+		value           uniform $omegaInlet;
+	}
+	outlet
+	{
+		type            zeroGradient;
+	}
+	top
+	{
+        type            omegaWallFunction;
+        value           uniform $omegaInlet;
     }
-
-    outlet
-    {
-        type            zeroGradient;
+	bottom
+	{
+        type            omegaWallFunction;
+        value           uniform $omegaInlet;
     }
-
-    bottom
-    {
-        type            zeroGradient;
-    }
-
-    top
-    {
-        type            zeroGradient;
-    }
-
-    side
+	side
     {
         type            empty;
     }
+
 }
 
 
