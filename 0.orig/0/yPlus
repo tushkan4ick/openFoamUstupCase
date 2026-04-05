@@ -32,17 +32,7 @@ boundaryField
         type            calculated;
         value           uniform 0;
     }
-	bottom_1
-    {
-        type            calculated;
-        value           uniform 0;
-    }
-	bottom_2
-    {
-        type            calculated;
-        value           uniform 0;
-    }
-	step
+    bottom
     {
         type            calculated;
         value           uniform 0;

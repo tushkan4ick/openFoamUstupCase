@@ -9,52 +9,52 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      alphat;
+    class       dictionary;
+    object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [1 -1 -1 0 0 0 0];
+fluxScheme          Kurganov;
 
-internalField   uniform 0;
-
-boundaryField
+ddtSchemes
 {
-    inlet
-    {
-        type            calculated;
-        value           uniform 0;
-    }
-	outlet
-	{
-		type            calculated;
-        value           uniform 0;
-	}
-	top
-	{
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-	}
-	bottom_1
-    {
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-	bottom_2
-    {
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-	step
-    {
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-    side
-    {
-        type            empty;
-    }
+    default         Euler;
 }
 
+gradSchemes
+{
+    default         Gauss linear;
+}
+
+divSchemes
+{
+    default         Gauss linear;
+
+    div(tauMC)      Gauss linear corrected;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear corrected;
+}
+
+interpolationSchemes
+{
+    default         linear;
+
+    reconstruct(rho) vanLeer;
+    reconstruct(U)  vanLeerV;
+    reconstruct(T)  vanLeer;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+wallDist
+{
+	method meshWave;
+}
 
 // ************************************************************************* //

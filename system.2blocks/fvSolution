@@ -9,51 +9,49 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      alphat;
+    class       dictionary;
+    object      fvSolution;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [1 -1 -1 0 0 0 0];
-
-internalField   uniform 0;
-
-boundaryField
+solvers
 {
-    inlet
+    "(rho|rhoU|rhoE)"
     {
-        type            calculated;
-        value           uniform 0;
+        solver          diagonal;
     }
-	outlet
+
+    U
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        nSweeps         2;
+        tolerance       1e-09;
+        relTol          0.01;
+    }
+
+    h
+    {
+        $U;
+        tolerance       1e-10;
+        relTol          0.01;
+    }
+
+/*    omega
 	{
-		type            calculated;
-        value           uniform 0;
+		solver          smoothSolver;
+		smoother        GaussSeidel;
+		tolerance       1e-6;
+		relTol          0.1;
 	}
-	top
+	
+	k
 	{
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-	}
-	bottom_1
-    {
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-	bottom_2
-    {
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-	step
-    {
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-    side
-    {
-        type            empty;
-    }
+		solver          smoothSolver;
+		smoother        GaussSeidel;
+		tolerance       1e-6;
+		relTol          0.1;
+	}*/
 }
 
 

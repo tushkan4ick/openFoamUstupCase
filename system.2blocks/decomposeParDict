@@ -9,52 +9,19 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      alphat;
+    class       dictionary;
+    object      decomposeParDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [1 -1 -1 0 0 0 0];
+numberOfSubdomains  26;
 
-internalField   uniform 0;
+method          scotch;
 
-boundaryField
+/*coeffs
 {
-    inlet
-    {
-        type            calculated;
-        value           uniform 0;
-    }
-	outlet
-	{
-		type            calculated;
-        value           uniform 0;
-	}
-	top
-	{
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-	}
-	bottom_1
-    {
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-	bottom_2
-    {
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-	step
-    {
-		type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-    side
-    {
-        type            empty;
-    }
-}
+    n           (2 3 1);
+}*/
 
 
 // ************************************************************************* //
