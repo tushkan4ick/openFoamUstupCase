@@ -42,7 +42,7 @@ boundaryField
 	step
     {
         type            fixedValue;
-		value			uniform 300;
+	value		uniform 300;
     }
 
     top
