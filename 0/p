@@ -16,14 +16,14 @@ FoamFile
 
 dimensions      [1 -1 -2 0 0 0 0];
 
-internalField   uniform 750;
+internalField   uniform 300;
 
 boundaryField
 {
     inlet
     {
         type            fixedValue;
-        value           uniform 750;
+        value           uniform 600;
     }
 
     outlet
@@ -48,7 +48,9 @@ boundaryField
 
     top
     {
-        type            zeroGradient;
+    	type		zeroGradient;
+        //type            fixedValue;
+        //value		uniform 300;
     }
     /*{
     	type		waveTransmissive;

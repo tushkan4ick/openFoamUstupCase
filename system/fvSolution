@@ -1,8 +1,8 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2412                                 |
-|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|  \\    /   O peration     | Version:  4.x                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -14,45 +14,124 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-solvers
+pseudoTime
 {
-    "(rho|rhoU|rhoE)"
-    {
-        solver          diagonal;
-    }
+    nPseudoCorr        50;
+    nPseudoCorrMin     5;
+    pseudoTol          1e-3 (1e-3 1e-3 1e-3) 1e-3;
+    pseudoTolRel       1e-2 (1e-2 1e-2 1e-2) 1e-2;
+    pseudoCoNum        0.1;
+    pseudoCoNumMax     50.0;
 
-    U
-    {
-        solver          smoothSolver;
-        smoother        GaussSeidel;
-        nSweeps         2;
-        tolerance       1e-09;
-        relTol          0.01;
-    }
+    pseudoCoNumMaxIncreaseFactor  1.2;
+    pseudoCoNumMin                0.1;
 
-    h
-    {
-        $U;
-        tolerance       1e-10;
-        relTol          0.01;
-    }
-
-/*    omega
-	{
-		solver          smoothSolver;
-		smoother        GaussSeidel;
-		tolerance       1e-6;
-		relTol          0.1;
-	}
-	
-	k
-	{
-		solver          smoothSolver;
-		smoother        GaussSeidel;
-		tolerance       1e-6;
-		relTol          0.1;
-	}*/
+    localTimestepping             true;
+    localTimesteppingBounding     true;
+    localTimesteppingLowerBound   0.95;
 }
 
+flowSolver
+{
+    solver             GMRES;
+    GMRES
+    {
+        inviscidJacobian  LaxFriedrichs;
+        viscousJacobian   laplacian;
+        preconditioner    LUSGS;
+
+        maxIter           20;
+        nKrylov           8;
+        solverTolRel      1e-1 (1e-1 1e-1 1e-1) 1e-1;
+    }
+}
+
+potentialFlow
+{
+    nNonOrthogonalCorrectors 8;
+
+    PhiRefValue 0;
+    PhiRefCell 0;
+}
+
+solvers
+{
+    "(k|omega|nuTilda)"
+    {
+        solver           smoothSolver;
+        smoother         GaussSeidel;
+        tolerance        1e-8;
+        relTol           0.1;
+        nSweeps          1;
+        minIter          1;
+    }
+
+    "(k|omega|nuTilda)Final"
+    {
+        $k;
+        relTol          0;
+    }
+
+    yPsi
+    {
+        solver          GAMG;
+        smoother        GaussSeidel;
+        nCellsInCoarsestLevel 10;
+        agglomerator    faceAreaPair;
+        mergeLevels     1;
+        tolerance       1e-3;
+        relTol          0;
+    }
+
+    yWall
+    {
+        solver          GAMG;
+        smoother        symGaussSeidel;
+        nCellsInCoarsestLevel 10;
+        agglomerator    faceAreaPair;
+        mergeLevels     1;
+        tolerance       1e-8;
+        relTol          0;
+    }
+
+    Phi
+    {
+        solver           GAMG;
+        tolerance        1e-7;
+        relTol           0.01;
+        smoother         GaussSeidel;
+        nPreSweeps       0;
+        nPostSweeps      2;
+        cacheAgglomeration on;
+        agglomerator     faceAreaPair;
+        nCellsInCoarsestLevel 10;
+        mergeLevels      1;
+    }
+}
+
+relaxationFactors
+{
+    // Conservative settings to solve reliably on bad
+    // meshes
+    equations
+    {
+        U               0.6;
+        UFinal          1;
+        k               0.5;
+        kFinal          1;
+        omega           0.5;
+        omegaFinal      1;
+    yWall               0.7;
+    }
+    fields
+    {
+        p               1;
+    }
+}
+
+cache
+{
+    grad(U);
+}
 
 // ************************************************************************* //

@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     rhoCentralFoam;
+application     hisa;
 
 startFrom       latestTime;
 
@@ -24,7 +24,7 @@ stopAt          endTime;
 
 endTime         0.5;
 
-deltaT          0.0001;
+deltaT          0.01;
 
 writeControl    adjustable;
 
@@ -44,7 +44,7 @@ runTimeModifiable true;
 
 adjustTimeStep  yes;
 
-maxCo           0.3;
+maxCo			500;
 
 maxDeltaT       1;
 
