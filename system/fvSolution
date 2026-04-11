@@ -16,12 +16,12 @@ FoamFile
 
 pseudoTime
 {
-    nPseudoCorr        50;
-    nPseudoCorrMin     5;
+    nPseudoCorr        10;
+    nPseudoCorrMin     1;
     pseudoTol          1e-3 (1e-3 1e-3 1e-3) 1e-3;
     pseudoTolRel       1e-2 (1e-2 1e-2 1e-2) 1e-2;
-    pseudoCoNum        0.1;
-    pseudoCoNumMax     50.0;
+    pseudoCoNum        0.5;
+    pseudoCoNumMax     100.0;
 
     pseudoCoNumMaxIncreaseFactor  1.2;
     pseudoCoNumMin                0.1;
@@ -40,8 +40,8 @@ flowSolver
         viscousJacobian   laplacian;
         preconditioner    LUSGS;
 
-        maxIter           20;
-        nKrylov           8;
+        maxIter           8;
+        nKrylov           5;
         solverTolRel      1e-1 (1e-1 1e-1 1e-1) 1e-1;
     }
 }
@@ -115,13 +115,13 @@ relaxationFactors
     // meshes
     equations
     {
-        U               0.6;
+        U               1;
         UFinal          1;
-        k               0.5;
+        k               1;
         kFinal          1;
-        omega           0.5;
+        omega           1;
         omegaFinal      1;
-    yWall               0.7;
+    yWall               1;
     }
     fields
     {
