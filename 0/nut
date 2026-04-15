@@ -10,11 +10,11 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      alphat;
+    object      nut;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [1 -1 -1 0 0 0 0];
+dimensions      [0 2 -1 0 0 0 0];
 
 internalField   uniform 0;
 
@@ -28,38 +28,36 @@ boundaryField
 	
 	outlet
 	{
-		type            calculated;
+        type            calculated;
         value           uniform 0;
-	}
-	
+    }
 	top
-	{
-		type            calculated;
-        value           uniform 0;
-	}
 	
-	bottom_1
 	{
-        type            compressible::alphatWallFunction;
+        type            calculated;
         value           uniform 0;
-	}
+    }
+	bottom_1
+	
+	{
+        type            nutkWallFunction;
+        value           uniform 0;
+    }
 
     bottom_2
     {
-        type            compressible::alphatWallFunction;
+        type            nutkWallFunction;
         value           uniform 0;
     }
 	step
     {
-        type            compressible::alphatWallFunction;
+        type            nutkWallFunction;
         value           uniform 0;
     }
-
     side
     {
         type            empty;
     }
-
 }
 
 

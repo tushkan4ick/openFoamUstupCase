@@ -38,7 +38,7 @@ boundaryField
             componentColumns    (0 1 2);			//Допускаются любые целые числа, дающие номера столбцов (Ux Uy Uz)
             separator		",";				//допускается любой, в тч несколько, по умолчанию: ","
             mergeSeparators     no;        			//для одного разделителя, если несколько, то: yes
-            file		"constant/uProfile_new.csv";
+            file        		"constant/uProfile.csv";
             outOfBounds         clamp;				//clamp - при выходе за пределы значение становится постоянным и равным значению на границе
             interpolationScheme linear;
         }*/
@@ -49,18 +49,22 @@ boundaryField
     {
         type            zeroGradient;
     }
-	bottom_1
+
+    bottom_1
     {
         type            noSlip;
     }
+	
 	bottom_2
     {
         type            noSlip;
     }
+	
 	step
     {
         type            noSlip;
     }
+
     top
     {
         type            zeroGradient;

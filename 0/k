@@ -10,52 +10,47 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    object      alphat;
+    object      k;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [1 -1 -1 0 0 0 0];
+kInlet          0.01;
 
-internalField   uniform 0;
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform $kInlet;
 
 boundaryField
 {
     inlet
-    {
-        type            calculated;
-        value           uniform 0;
-    }
-	
+	{
+		type            fixedValue;
+		value           uniform $kInlet;
+	}
 	outlet
 	{
-		type            calculated;
-        value           uniform 0;
+		type            zeroGradient;
 	}
-	
 	top
 	{
-		type            calculated;
-        value           uniform 0;
+		type            zeroGradient;
 	}
-	
 	bottom_1
 	{
-        type            compressible::alphatWallFunction;
-        value           uniform 0;
+		type            kqRWallFunction;
+		value           uniform $kInlet;  // или uniform 0.01
 	}
-
-    bottom_2
-    {
-        type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
+	bottom_2
+	{
+		type            kqRWallFunction;
+		value           uniform $kInlet;  // или uniform 0.01
+	}
 	step
-    {
-        type            compressible::alphatWallFunction;
-        value           uniform 0;
-    }
-
-    side
+	{
+		type            kqRWallFunction;
+		value           uniform $kInlet;  // или uniform 0.01
+	}
+	side
     {
         type            empty;
     }
