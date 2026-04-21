@@ -12,7 +12,7 @@ FoamFile
     arch        "LSB;label=32;scalar=64";
     class       volScalarField;
     location    "0";
-    object      yPlus;
+    object      Ma;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -25,7 +25,7 @@ boundaryField
     inlet
     {
         type            calculated;
-        value           uniform 0;
+        value           uniform 2.02795;
     }
     outlet
     {
