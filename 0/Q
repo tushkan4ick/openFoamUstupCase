@@ -12,11 +12,11 @@ FoamFile
     arch        "LSB;label=32;scalar=64";
     class       volScalarField;
     location    "0";
-    object      yPlus;
+    object      Q;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 0 0 0 0 0 0];
+dimensions      [0 0 -2 0 0 0 0];
 
 internalField   uniform 0;
 

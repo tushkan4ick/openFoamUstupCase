@@ -51,7 +51,7 @@ maxDeltaT       1;
 
 functions
 {
-    minPressure
+    /*minPressure
     {
         type            fieldMinMax;
         libs            ("libfieldFunctionObjects.so");
@@ -60,6 +60,7 @@ functions
         mode            magnitude;
         fields          ( p );
     }
+
     minMaxVelocity
     {
         type            fieldMinMax;
@@ -68,7 +69,8 @@ functions
         writeControl    writeTime;
         mode            component;
         fields          ( U );
-    }
+    }*/
+
     MachNo1
     {
         type            MachNo;
@@ -82,11 +84,11 @@ functions
     	type            exprField;
     	libs            ("libfieldFunctionObjects.so");
 
-   	enabled         true;
+   	    enabled         true;
     	field           Re;
     	dimensions      [0 0 0 0 0 0 0];
 
-    	expression      "rho*mag(U)*(T + 110)/(1.458e-06*pow(T,1.5))";
+    	expression      "rho*mag(U)*(T + 110)*3/(1.458e-06*pow(T,1.5))";
 
     	autowrite       true;
     	store           true;
@@ -94,6 +96,105 @@ functions
     	executeControl  timeStep;
     	executeInterval 1;
     	writeControl    writeTime;
+    }
+    
+    Entropy
+    {
+    	type 		    exprField;
+    	libs            ("libfieldFunctionObjects.so");
+    	
+    	enabled		    true;
+    	field		    s;
+    	dimensions	    [1 2 -2 -1 0 0 0];
+    	
+    	expression	    "1005*log(T/288)-287*log(p/101325)";
+    	
+    	autowrite       true;
+    	store           true;
+
+    	executeControl  timeStep;
+    	executeInterval 1;
+    	writeControl    writeTime;
+    }
+
+    TotalTemperature
+    {
+    	type            exprField;
+    	libs            ("libfieldFunctionObjects.so");
+
+   	    enabled         true;
+    	field           T0;
+    	dimensions      [0 0 0 1 0 0 0];
+
+    	expression      "T*(1+0.2*pow(Ma,2))";
+
+    	autowrite       true;
+    	store           true;
+
+    	executeControl  timeStep;
+    	executeInterval 1;
+    	writeControl    writeTime;
+    }
+
+    TotalEnthalpy
+    {
+    	type            exprField;
+    	libs            ("libfieldFunctionObjects.so");
+
+   	    enabled         true;
+    	field           H0;
+    	dimensions      [0 2 -2 0 0 0 0];
+
+    	expression      "1005*T + 0.5*magSqr(U)";
+
+    	autowrite       true;
+    	store           true;
+
+    	executeControl  timeStep;
+    	executeInterval 1;
+    	writeControl    writeTime;
+    }
+
+    gradP
+    {
+        type            grad;
+        libs            (fieldFunctionObjects);
+        field           p;
+
+        writeControl    writeTime;
+    }
+
+    divU
+    {
+        type            div;
+        libs            (fieldFunctionObjects);
+        field           U;
+
+        writeControl    writeTime;
+    }
+
+    Q
+    {
+        type            Q;
+        libs            (fieldFunctionObjects);
+
+        writeControl    writeTime;
+    }
+
+    wSS
+    {
+        type            wallShearStress;
+        libs            (fieldFunctionObjects);
+
+        writeControl    writeTime;
+    }
+
+    yPlus
+    {
+        type            yPlus;
+        libs            (fieldFunctionObjects);
+
+        writeControl    writeTime;
     }
 
 }

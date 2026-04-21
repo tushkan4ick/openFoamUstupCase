@@ -24,6 +24,7 @@ ddtSchemes
 divSchemes
 {
     // Use second-order accurate convection
+    default	    Gauss linear;
     div(phi,k)      Gauss upwind;
     div(phi,omega)  Gauss upwind;
     div(tauMC)      Gauss linear;
